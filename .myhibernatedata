@@ -1,0 +1,20 @@
+#MyEclipse Hibernate Properties
+#Sun Jun 05 12:54:16 CST 2016
+genBasicCompId=true
+sessionFactoryName=
+profile=
+daoSFId=sessionFactory
+jndiPath=
+detectM2M=true
+reStrategyClass=
+detectO2O=true
+springDaoFile=src/applicationContext.xml
+useJavaTypes=false
+keyGenerator=native
+genVersionTag=true
+sessionFactoryId=sessionFactory
+basePersistenceClass=
+genAnnotations=false
+reSettingsFile=
+configFile=/HolyRecruit/src/applicationContext.xml
+createConfigFile=true

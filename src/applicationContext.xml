@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.gjt.mm.mysql.Driver" />  
+		<property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="holy520"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/holy/model/Users.hbm.xml</value>
+				<value>com/holy/model/Position.hbm.xml</value>
+				<value>com/holy/model/Company.hbm.xml</value>
+				<value>com/holy/model/Product.hbm.xml</value></list>
+		</property>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
+  		<property name="sessionFactory">  
+		<ref bean="sessionFactory" />   
+  		</property>   
+		</bean> 
+	<bean id="transactionProxy"  
+    class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">  
+    <property name="transactionManager" ref="transactionManager"></property>  
+    <property name="transactionAttributes">  
+        <props>  
+            <prop key="add*">PROPAGATION_REQUIRED, -Exception</prop>  
+            <prop key="modify*">PROPAGATION_REQUIRED, -Exception</prop>  
+            <prop key="del*">PROPAGATION_REQUIRED, -Exception</prop>  
+            <prop key="*">PROPAGATION_REQUIRED, readOnly</prop>  
+        </props>  
+    </property>  
+	</bean> 
+	<bean id="UsersDAO" class="com.holy.dao.UsersDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="userinfoService" class="com.holy.service.UserDailService" scope="prototype">
+		<property name="userinfoDao" ref="UsersDAO" ></property>
+	</bean>
+	<bean id="loginbean" class="com.holy.action.userAction" scope="prototype">
+		<property name="userinfoService" ref="userinfoService" ></property>
+	</bean>
+	<bean id="rresbean" class="com.holy.action.resAction" scope="prototype">
+		<property name="userinfoService" ref="userinfoService" ></property>
+	</bean>
+	<bean id="modibean" class="com.holy.action.modiAction" scope="prototype">
+		<property name="userinfoService" ref="userinfoService" ></property>
+	</bean>
+	<bean id="PositionDAO" class="com.holy.dao.PositionDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CompanyDAO" class="com.holy.dao.CompanyDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ProductDAO" class="com.holy.dao.ProductDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="positionService" class="com.holy.service.PositionService" scope="prototype">
+	<property name="posinfoDao" ref="PositionDAO" ></property>
+	</bean>
+	<bean id="myposbean" class="com.holy.action.myposAction" scope="prototype">
+		<property name="positionService" ref="positionService" ></property>
+	</bean>
+	<bean id="comService" class="com.holy.service.ComService" scope="prototype">
+	<property name="cominfoDao" ref="CompanyDAO" ></property>
+	</bean>
+	<bean id="combean" class="com.holy.action.comAction" scope="prototype">
+		<property name="comservice" ref="comService" ></property>
+	</bean>
+	<bean id="proService" class="com.holy.service.proService" scope="prototype">
+	<property name="poDao" ref="PositionDAO" ></property>
+	<property name="proDao" ref="ProductDAO" ></property>
+	</bean>
+	<bean id="myhomebean" class="com.holy.action.proAction" scope="prototype">
+		<property name="proservice" ref="proService" ></property>
+	</bean>
+	
+	<bean id="registerbean" class="com.holy.action.UserssAction" scope="prototype">
+	<property name="userdailService" ref="userinfoService" ></property>
+	</bean>
+	<bean id="polistbean" class="com.holy.action.positionactivation">
+	<property name="poservice" ref="positionService"></property>
+	<property name="comser" ref="comService"></property>
+	<property name="usser" ref="userinfoService"></property>  
+	</bean>
+	<bean id="companybean" class="com.holy.action.CompanyAction">
+	<property name="comser" ref="comService"></property>
+	</bean>
+	
+	<bean id="addcombean" class="com.holy.action.CompanyAction">
+	<property name="comser" ref="comService"></property>
+	</bean>
+	</beans>

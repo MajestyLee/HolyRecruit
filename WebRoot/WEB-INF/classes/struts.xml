@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="holyRecruit" namespace="/" extends="struts-default">
+	<action name="login" class="loginbean" method="log">
+	<result type="redirectAction" name="success">showpolist</result>
+    <result name="success2" type="redirectAction">listuser</result>
+    <result name="success3">shoplist</result>
+	<result name="false">log.jsp</result>
+	</action>
+	<action name="jjres" class="rresbean" method="ress">
+	<result name="success">jump.jsp</result>
+	<result name="false">res.jsp</result>
+	</action>
+	<action name="modi" class="modibean" method="modi">
+	<result name="success">log.jsp</result>
+	<result name="false">acc.jsp</result>
+	</action>
+	<action name="deletemypos" class="myposbean" method="deletemyposition">
+	<result type="redirectAction">mypos</result> 
+	</action>
+	<action name="xiamypos" class="myposbean" method="xiamyposition">
+	<result type="redirectAction">mypos</result> 
+	</action>
+	<action name="mypos" class="myposbean" method="listmyposition">
+	<result name="success">position.jsp</result>
+	<result name="error">position.jsp</result>
+	</action>
+	<action name="listxiamypos" class="myposbean" method="listxiamp">
+	<result name="success">Xiaxian.jsp</result>
+	<result name="error">Xiaxian.jsp</result>
+	</action>
+	<action name="deleteusers" class="loginbean" method="deleteUsers">
+	<result type="redirectAction">listuser</result> 
+	</action>
+	<action name="listuser" class="loginbean" method="listuser">
+	<result name="success">teacher.jsp</result>
+	<result name="error">teacher.jsp</result>
+	</action>
+	<action name="listmate" class="loginbean" method="listmate">
+	<result name="success">temate.jsp</result>
+	<result name="error">temate.jsp</result>
+	</action>
+	<action name="deletecom" class="loginbean" method="deleteCom">
+	<result type="redirectAction">listcom</result> 
+	</action>
+	<action name="listcom" class="combean" method="listcom">
+	<result name="success">tecom.jsp</result>
+	<result name="error">tecom.jsp</result>
+	</action>
+	<action name="register" class="registerbean"  method="addUserDail">
+    <result name="success">log.jsp</result>
+   	<result name="error">reg.jsp</result>
+   	</action>
+   	<action name="addposition" class="polistbean" method="addPostion">
+   	<result type="redirectAction">mypos</result>
+   	</action>
+   	<action name="showpolist" class="polistbean" method="polist">
+   	<result name="success">in.jsp</result>
+   	</action>
+   	<action name="showcompany" class="companybean" method="company">
+   	</action>
+   	<action name="myhome" class="myhomebean" method="myhome">
+	<result name="success">myhome.jsp</result>
+	
+	<result name="error">index.jsp</result>
+	
+	
+	</action>
+	<action name="showmore" class="polistbean" method="polist">
+	<result name="success">list.jsp</result>
+	</action>
+	
+	<action name="addcompany" class="addcombean" method="addcompany">
+	<result type="redirectAction">mypos</result>
+	</action>
+	
+	</package> 
+</struts>    
